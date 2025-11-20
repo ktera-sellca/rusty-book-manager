@@ -7,6 +7,5 @@ edition.workspace = true
 kernel.workspace = true
 shared.workspace = true
 async-trait.workspace = true
-anyhow.workspace = true
 sqlx.workspace = true
 derive-new.workspace = true
