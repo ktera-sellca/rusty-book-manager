@@ -7,8 +7,10 @@ name = "adapter"
 version = "0.1.0"
 dependencies = [
  "async-trait",
+ "bcrypt",
  "derive-new",
  "kernel",
+ "redis",
  "shared",
  "sqlx",
  "uuid",
@@ -1368,6 +1370,7 @@ version = "0.1.0"
 dependencies = [
  "adapter",
  "kernel",
+ "shared",
 ]
 
 [[package]]
