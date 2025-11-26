@@ -14,3 +14,4 @@ axum-extra.workspace = true
 strum.workspace = true
 garde.workspace = true
 derive-new.workspace = true
+chrono.workspace = true
