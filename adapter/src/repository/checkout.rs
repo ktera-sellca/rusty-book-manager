@@ -116,14 +116,14 @@ impl CheckoutRepository for CheckoutRepositoryImpl {
             let res = sqlx::query_as!(
                 CheckoutStateRow,
                 r#"
-                        SELECT
-                        b.book_id,
-                        c.checkout_id AS "checkout_id?: CheckoutId",
-                        c.user_id AS "user_id?: UserId"
-                        FROM books AS b
-                        LEFT OUTER JOIN checkouts AS c USING(book_id)
-                        WHERE book_id = $1;
-                    "#,
+                    SELECT
+                    b.book_id,
+                    c.checkout_id AS "checkout_id?: CheckoutId",
+                    c.user_id AS "user_id?: UserId"
+                    FROM books AS b
+                    LEFT OUTER JOIN checkouts AS c USING(book_id)
+                    WHERE book_id = $1;
+                "#,
                 event.book_id as _,
             )
             .fetch_optional(&mut *tx)
@@ -156,13 +156,13 @@ impl CheckoutRepository for CheckoutRepositoryImpl {
         // returned_at を追加して returned_checkouts テーブルに INSERT する
         let res = sqlx::query!(
             r#"
-                    INSERT INTO returned_checkouts
-                    (checkout_id, book_id, user_id, checked_out_at, returned_at)
-                    SELECT checkout_id, book_id, user_id, checked_out_at, $2
-                    FROM checkouts
-                    WHERE checkout_id = $1
-                    ;
-                "#,
+                INSERT INTO returned_checkouts
+                (checkout_id, book_id, user_id, checked_out_at, returned_at)
+                SELECT checkout_id, book_id, user_id, checked_out_at, $2
+                FROM checkouts
+                WHERE checkout_id = $1
+                ;
+            "#,
             event.checkout_id as _,
             event.returned_at,
         )
