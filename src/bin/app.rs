@@ -1,7 +1,8 @@
 use adapter::{database::connect_database_with, redis::RedisClient};
 use anyhow::{Context, Result};
 use api::route::{
-    auth::build_auth_routes, book::build_book_routes, health::build_health_check_routers,
+    auth::{self},
+    v1,
 };
 use axum::Router;
 use registry::AppRegistry;
@@ -57,9 +58,8 @@ async fn bootstrap() -> Result<()> {
     let registry = AppRegistry::new(pool, kv, app_config);
 
     let app = Router::new()
-        .merge(build_health_check_routers())
-        .merge(build_book_routes())
-        .merge(build_auth_routes())
+        .merge(v1::routes())
+        .merge(auth::routes())
         .layer(
             TraceLayer::new_for_http()
                 .make_span_with(DefaultMakeSpan::new().level(Level::INFO))
