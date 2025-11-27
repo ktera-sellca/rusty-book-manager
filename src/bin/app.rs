@@ -22,6 +22,8 @@ use tower_http::{
 };
 use tracing::Level;
 use tracing_subscriber::{EnvFilter, layer::SubscriberExt, util::SubscriberInitExt};
+use utoipa::OpenApi;
+use utoipa_redoc::{Redoc, Servable};
 
 #[tokio::main]
 async fn main() -> Result<()> {
@@ -61,6 +63,7 @@ async fn bootstrap() -> Result<()> {
     let app = Router::new()
         .merge(v1::routes())
         .merge(auth::routes())
+        .merge(Redoc::with_url("/docs", api::openapi::ApiDoc::openapi()))
         .layer(cors())
         .layer(
             TraceLayer::new_for_http()
