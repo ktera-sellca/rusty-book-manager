@@ -130,6 +130,7 @@ impl From<Book> for BookResponse {
             isbn,
             description,
             owner,
+            ..
         } = value;
 
         Self {
