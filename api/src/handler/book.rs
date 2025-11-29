@@ -81,6 +81,12 @@ pub async fn show_book_list(
         (status = 404, description = "蔵書が存在しない"),
     )
 )]
+#[tracing::instrument(
+    skip(_user, registry),
+    fields(
+        user_id = %_user.user.id.to_string()
+    )
+)]
 pub async fn show_book(
     _user: AuthorizedUser,
     Path(book_id): Path<BookId>,

@@ -16,3 +16,4 @@ garde.workspace = true
 derive-new.workspace = true
 chrono.workspace = true
 utoipa.workspace = true
+tracing.workspace = true

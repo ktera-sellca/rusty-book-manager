@@ -41,10 +41,15 @@ fn init_logger() -> Result<()> {
     let env_filter = EnvFilter::try_from_default_env().unwrap_or_else(|_| log_level.into());
 
     // ログの出力形式を設定
+    // デバッグビルド・リリースビルドともに共通の設定
     let subscriber = tracing_subscriber::fmt::layer()
         .with_file(true)
         .with_line_number(true)
         .with_target(true);
+
+    // リリースビルド（本番環境）では JSON による構造化ログを出力する
+    #[cfg(not(debug_assertions))]
+    let subscriber = subscriber.json();
 
     tracing_subscriber::registry()
         .with(subscriber)
