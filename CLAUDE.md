@@ -277,3 +277,4 @@ Docker内での実行時は`postgres`, `redis`がホスト名になります。
 - `api/src/openapi.rs`で定義
 - ハンドラに`#[utoipa::path(...)]`を付与
 - モデルに`#[derive(ToSchema)]`を付与
+
